@@ -76,14 +76,13 @@ ioctl$KBASE_IOCTL_GET_CPU_GPU_TIMEINFO(fd fd_midgard, cmd const[KBASE_IOCTL_GET_
 
 # New IOCTL in mali 5th
 ioctl$KBASE_IOCTL_KINSTR_JM_FD(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$KBASE_IOCTL_CINSTR_GWT_START(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$KBASE_IOCTL_CINSTR_GWT_STOP(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$KBASE_IOCTL_CINSTR_GWT_DUMP(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$kbase_ioctl_cs_queue_group_create_1_16(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$kbase_ioctl_cs_queue_group_create_1_18(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$KBASE_IOCTL_QUEUE_GROUP_CLEAR_FAULTS(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$KBASE_IOCTL_TLSTREAM_STATS(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
-ioctl$KBASE_IOCTL_CS_TILER_HEAP_INIT_1_13(fd fd_hwcnt, cmd const[KBASE_HWCNT_READER_GET_API_VERSION], arg const[0])
+ioctl$KBASE_IOCTL_CINSTR_GWT_START(fd fd_hwcnt, cmd const[KBASE_IOCTL_CINSTR_GWT_START], arg const[0])
+ioctl$KBASE_IOCTL_CINSTR_GWT_STOP(fd fd_hwcnt, cmd const[KBASE_IOCTL_CINSTR_GWT_STOP], arg const[0])
+ioctl$KBASE_IOCTL_CINSTR_GWT_DUMP(fd fd_hwcnt, cmd const[KBASE_IOCTL_CINSTR_GWT_DUMP], arg const[0])
+ioctl$kbase_ioctl_cs_queue_group_create_1_16(fd fd_hwcnt, cmd const[kbase_ioctl_cs_queue_group_create_1_16], arg const[0])
+ioctl$kbase_ioctl_cs_queue_group_create_1_18(fd fd_hwcnt, cmd const[kbase_ioctl_cs_queue_group_create_1_18], arg const[0])
+ioctl$KBASE_IOCTL_QUEUE_GROUP_CLEAR_FAULTS(fd fd_hwcnt, cmd const[KBASE_IOCTL_QUEUE_GROUP_CLEAR_FAULTS], arg const[0])
+ioctl$KBASE_IOCTL_TLSTREAM_STATS(fd fd_hwcnt, cmd const[KBASE_IOCTL_TLSTREAM_STATS], arg const[0])
 
 
 type base_atom_id int8
@@ -126,38 +125,21 @@ kbase_ioctl_soft_event_update {
 	new_status	int32
 	flags		const[0, int32]
 }
-#struct kbase_ioctl_soft_event_update {
-#	__u64 event;
-#	__u32 new_status;
-#	__u32 flags;
-#};
 
 kbase_ioctl_version_check {
 	major	int16
 	minor	int16
 }
-#struct kbase_ioctl_version_check {
-#	__u16 major;
-#	__u16 minor;
-#};
 
 kbase_ioctl_set_flags {
 	create_flags	flags[basep_context_create_kernel_flags, int32]
 }
-#struct kbase_ioctl_set_flags {
-#	__u32 create_flags;
-#};
 
 kbase_ioctl_get_gpuprops {
 	buffer	ptr64[out, array[int8]]
 	size	len[buffer, int32]
 	flags	const[0, int32]
 }
-#struct kbase_ioctl_get_gpuprops {
-#	__u64 buffer;
-#	__u32 size;
-#	__u32 flags;
-#};
 
 kbase_ioctl_mem_alloc {
 	va_pages	int64
@@ -167,41 +149,16 @@ kbase_ioctl_mem_alloc {
 	out_flags	int64	(out_overlay)
 	gpu_va		gpu_addr
 }
-#union kbase_ioctl_mem_alloc {
-#	struct {
-#		__u64 va_pages;
-#		__u64 commit_pages;
-#		__u64 extension;
-#		__u64 flags;
-#	} in;
-#	struct {
-#		__u64 flags;
-#		__u64 gpu_va;
-#	} out;
-#};
-
 
 kbase_ioctl_mem_query {
 	gpu_addr	gpu_addr
 	query		flags[kbase_ioctl_mem_query_flags, int64]
 	value		int64	(out_overlay)
 }
-#union kbase_ioctl_mem_query {
-#	struct {
-#		__u64 gpu_addr;
-#		__u64 query;
-#	} in;
-#	struct {
-#		__u64 value;
-#	} out;
-#};
 
 kbase_ioctl_mem_free {
 	gpu_addr	gpu_addr
 }
-#struct kbase_ioctl_mem_free {
-#	__u64 gpu_addr;
-#};
 
 kbase_ioctl_hwcnt_reader_setup {
 	buffer_count	int32
@@ -210,13 +167,6 @@ kbase_ioctl_hwcnt_reader_setup {
 	tiler_bm	int32
 	mmu_l2_bm	int32
 }
-#struct kbase_ioctl_hwcnt_reader_setup {
-#	__u32 buffer_count;
-#	__u32 fe_bm;
-#	__u32 shader_bm;
-#	__u32 tiler_bm;
-#	__u32 mmu_l2_bm;
-#};
 
 kbase_ioctl_hwcnt_enable {
 	dump_buffer	gpu_addr
@@ -235,20 +185,12 @@ kbase_ioctl_hwcnt_values {
 kbase_ioctl_disjoint_query {
 	counter	int32
 }
-#struct kbase_ioctl_disjoint_query {
-#	__u32 counter;
-#};
 
 kbase_ioctl_get_ddk_version {
 	version_buffer	ptr64[out, array[int8]]
 	size		len[version_buffer, int32]
 	padding		const[0, int32]
 }
-#struct kbase_ioctl_get_ddk_version {
-#	__u64 version_buffer;
-#	__u32 size;
-#	__u32 padding;
-#};
 
 kbase_ioctl_mem_jit_init_10_2 {
 	va_pages	int64
@@ -270,14 +212,6 @@ kbase_ioctl_mem_jit_init {
 	padding		array[const[0, int8], 5]
 	phys_pages	int64
 }
-#struct kbase_ioctl_mem_jit_init {
-#	__u64 va_pages;
-#	__u8 max_allocations;
-#	__u8 trim_level;
-#	__u8 group_id;
-#	__u8 padding[5];
-#	__u64 phys_pages;
-#};
 
 kbase_ioctl_mem_sync {
 	handle		gpu_addr
@@ -286,13 +220,6 @@ kbase_ioctl_mem_sync {
 	type		flags[base_syncset_op_flags, int8]
 	padding		array[const[0, int8], 7]
 }
-#struct kbase_ioctl_mem_sync {
-#	__u64 handle;
-#	__u64 user_addr;
-#	__u64 size;
-#	__u8 type;
-#	__u8 padding[7];
-#};
 
 kbase_ioctl_mem_find_cpu_offset {
 	gpu_addr	gpu_addr
@@ -450,6 +377,18 @@ kbase_ioctl_queue_group_clear_faults {
 kbase_ioctl_tlstream_stats {
 	bytes_collected	int32
 	bytes_generated	int32
+}
+
+kbase_ioctl_cs_tiler_heap_init {
+	chunk_size			int32
+	initial_chunks;		int32
+	max_chunks;			int32
+	target_in_flight;	int16
+	group_id;			int8
+	padding;			int8
+	buf_desc_va;		int64
+	gpu_heap_va;		int64
+	first_chunk_va;		int64
 }
 
 kbase_ioctl_cs_tiler_heap_init_1_13 {
