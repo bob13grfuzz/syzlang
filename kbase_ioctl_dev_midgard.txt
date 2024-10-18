@@ -333,7 +333,7 @@ kbase_ioctl_cinstr_gwt_dump {
 	addr_buffer	int64
 	size_buffer int64
 	len			int32
-	padding		int32
+	padding		array[const[0, int8], 27]
 }
 
 kbase_ioctl_cs_queue_group_create_1_6{
@@ -345,9 +345,9 @@ kbase_ioctl_cs_queue_group_create_1_6{
 	tiler_max		int8
 	fragment_max	int8
 	compute_max		int8
-	padding			int8
+	padding			array[const[0, int8], 3]
 	group_handle	int8
-	padding			int8
+	padding			array[const[0, int8], 3]
 	group_uid		int32
 }
 
@@ -361,17 +361,17 @@ kbase_ioctl_cs_queue_group_create_1_18{
 	fragment_max	int8
 	compute_max		int8
 	csi_handlers	int8
-	padding			int8
+	padding			array[const[0, int8], 2]
 	dvs_buf			int64
 	group_handle	int8
-	padding			int8
+	padding			array[const[0, int8], 3]
 	group_uid		int32
 }
 
 kbase_ioctl_queue_group_clear_faults {
 	addr			int64
 	nr_queues		int32
-	padding[4]		int8
+	padding			array[const[0, int8], 4]
 }
 
 kbase_ioctl_tlstream_stats {
